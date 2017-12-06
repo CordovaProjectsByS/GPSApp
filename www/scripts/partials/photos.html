@@ -1,0 +1,19 @@
+﻿<h1>Photos</h1>
+
+<button ng-click="clickHandler()"> Do something</button>
+
+<ul>
+    <li ng-repeat="photo in photos" >
+        <a ui-sref="photoList.detail( {photoId: photo.id} )"
+           ng-disabled="!photo.active"
+           ng-class="{deactived: !photo.active}">
+           {{ photo.name }}
+        </a>
+            
+        <button ng-click="photo.active = !photo.active">
+            {{photo.active ? "Deactive" : "Activate"}}
+        </button>
+    </li>
+</ul>
+
+<ui-view></ui-view>

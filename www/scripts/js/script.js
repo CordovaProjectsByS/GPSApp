@@ -25,14 +25,11 @@ app.config(function ($stateProvider, $urlServiceProvider) {
         templateUrl: './scripts/partials/photoDetail.html',
         controller: 'PhotoDetailController',
         resolve: {
-            photo: function ($transition$, photos) {
+            photo: function ($transition$, PhotoService) {
                 let id = parseInt($transition$.params().photoId);
-                console.log("typ id: " + (typeof id));
-                console.log("id: " + id);
-                console.log(photos);
-                console.log("foto z grupy:" + photos[1].name);
-                let photo = photos.find(item => item.id === id );
-                console.log("pobrane foto: " + photo.name);
+                
+                let photo = PhotoService.get(id);
+              
                 return photo;
             }
         }

@@ -40,13 +40,20 @@ app.config(function ($stateProvider, $urlServiceProvider) {
 
 app.controller('MainPageController', function ($scope, $rootScope) {
     $scope.addPicture = function () {
-        var picture = {};
-        picture.desc = $scope.desPic;
+
+        var picture = {
+            'id': 0,
+            'desc': $scope.desPic,
+            'content': document.getElementById("uploadedFile").files[0]
+        };
+
+        console.log("wyświetlam:");
+
+        console.log(picture.id);
         console.log(picture.desc);
-        picture.id = 0;
-        picutre.url = document.getElementById("description").value;
-        console.log(picture.url);
-        $rootScope.pictures.unshift(picture);
+        console.log(picture.content);
+        
+        //$rootScope.pictures.unshift(picture);
     }
 });
 

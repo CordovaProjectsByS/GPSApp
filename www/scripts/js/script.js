@@ -2,7 +2,12 @@
 
 app.config(function ($stateProvider, $urlServiceProvider) {
     
-    $urlServiceProvider.rules.otherwise({ state: 'photoList' });
+    $urlServiceProvider.rules.otherwise({ state: 'mainPage' });
+
+    $stateProvider.state('mainPage', {
+        url: '/main',
+        templateUrl: './scripts/partials/mainPage.html',
+    });
 
     $stateProvider.state('photoList', {
         url: '/photos',
@@ -52,11 +57,7 @@ app.service('PhotoService', function ($http) {
             return $http.get('./scripts/data/photos.json', { cache: true }).then(resp => resp.data);
         },
         get: function (id) {
-            return service.list().then(list => function (list) {
-                let photoL = list.find(item => item.id === id);
-                console.log('photoL' + photoL);
-                return photoL;
-            });
+            return service.list().then(list => list.find(item => item.id === id));
         }
         
     };

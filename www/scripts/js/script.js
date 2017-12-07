@@ -7,6 +7,7 @@ app.config(function ($stateProvider, $urlServiceProvider) {
     $stateProvider.state('mainPage', {
         url: '/main',
         templateUrl: './scripts/partials/mainPage.html',
+        controller: "MainPageController"
     });
 
     $stateProvider.state('photoList', {
@@ -37,6 +38,18 @@ app.config(function ($stateProvider, $urlServiceProvider) {
 
 });
 
+app.controller('MainPageController', function ($scope, $rootScope) {
+    $scope.addPicture = function () {
+        var picture = {};
+        picture.desc = $scope.desPic;
+        console.log(picture.desc);
+        picture.id = 0;
+        picutre.url = document.getElementById("description").value;
+        console.log(picture.url);
+        $rootScope.pictures.unshift(picture);
+    }
+});
+
 app.controller('PhotoListController', function ($scope, photos) {
     $scope.photos = photos;
     $scope.clickHandler = function() {
@@ -61,4 +74,8 @@ app.service('PhotoService', function ($http) {
 
     return service;
 });
+
+app.run(function($rootScope) {
+    $rootScope.pictures = {};
+}); 
 

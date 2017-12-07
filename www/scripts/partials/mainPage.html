@@ -1,3 +1,5 @@
-﻿<input type="file" /> 
-<button>Dodaj</button>
+﻿<label for="description">Opis</label>
+<input type="text" id="description" ng-model="desPic"/>
+<input type="file" id="uploadedFile"/> 
+<button ng-click="addPicture()">Dodaj</button>
 <button ui-sref="photoList">Zobacz całą listę zdjęć</button>

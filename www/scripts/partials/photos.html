@@ -7,11 +7,9 @@
 
         {{ photo.id }} {{ photo.desc }} {{ photo.content }} {{ photo.latitude }} {{ photo.longtitude }}
 
-        <img ng-id-attr="{{ 'image' + photo.id }}">
+        <img img-display photoblob="photo.content" alt="coś poszło nie tak"/>
 
-        <button ng-click="delete(photo.id)">
-            Usuń
-        </button>
+        <button ng-click="delete(photo.id)">Usuń</button>
     </li>
 </ul>
 

@@ -73,27 +73,6 @@ app.controller('MainPageController', function ($scope, $rootScope, PhotoService)
 app.controller('PhotoListController', function ($scope, $rootScope, $timeout) {
     $scope.photos = $rootScope.pictures;
 
-    $scope.$on('$viewContentLoaded', function () {
-        $timeout(function () {
-            console.log("rozpoczynam ładwoanie zdjęć");
-            for (el of $scope.photos) {
-                let imgId = 'image' + el.id;
-                console.log("imgId: " + imgId);
-                var image = document.getElementById(imgId);
-
-                console.log("fsdafasdfdasfasdfdasfadsfadsfadsfadsfdasfadfadfadsfadsfadsfadsfasdfasdfadsfasdfadsfdsafdasfdasfdasfdasf");
-
-                var reader = new FileReader();
-                reader.onload = function () {
-                    image.src = reader.result;
-                };
-
-                console.log("kontent do załadowania: " + el.content);
-                reader.readAsDataURL(el.content);
-            }
-        }, 0);
-        
-    });
 
     $scope.delete = function (id) {
         $scope.photos = $scope.photos.filter(picture => picture.id != id);
@@ -132,8 +111,17 @@ app.service('PhotoService', function ($http, $rootScope) {
  
 app.directive('imgDisplay', function () {
     return {
+        scope: {
+            photoBlob: '=photoblob'
+        },
         link: function (scope, elem) {
-            
+            var reader = new FileReader();
+            reader.onload = function () {
+                elem.src = reader.result;
+                console.log('zdjęcie się załadowało!!!!');
+                console.log('elem.src: ' + elem.src);
+            };
+            reader.readAsDataURL(scope.photoBlob);
         }
     }
 });

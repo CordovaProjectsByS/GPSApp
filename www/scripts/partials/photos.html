@@ -1,0 +1,16 @@
+﻿<h1>Photos</h1>
+
+
+<button ui-sref="mainPage">Powrót</button>
+<ul>
+    <li ng-repeat="photo in photos">
+
+        {{ photo.id }} {{ photo.desc }} {{ photo.content }} {{ photo.latitude }} {{ photo.longtitude }}
+
+        <img img-display photoblob="photo.content" alt="coś poszło nie tak" ng-transclude/>
+
+        <button ng-click="delete(photo.id)">Usuń</button>
+    </li>
+</ul>
+
+

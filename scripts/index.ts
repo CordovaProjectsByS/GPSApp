@@ -15,20 +15,12 @@ module GPSApp {
             document.addEventListener('pause', onPause, false);
             document.addEventListener('resume', onResume, false);
 
-
-
-            var geoloactionSuccess, geolacationOptions;
-
            
-            navigator.geolocation.getCurrentPosition(onSuccess);
+
+            
             
         }
 
-        function onSuccess(position) {
-            console.log(position.coords.latitude);
-        }
-
-        
 
         function onPause() {
             // TODO: This application has been suspended. Save application state here.

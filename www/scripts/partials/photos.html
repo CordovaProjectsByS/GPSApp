@@ -3,10 +3,10 @@
 
 <button ui-sref="mainPage">Powrót</button>
 <ul>
-    <li ng-repeat="photo in photos">
+    <li ng-repeat="photo in photos" class="image-section">
 
-        {{ photo.id }} {{ photo.desc }} {{ photo.content }} {{ photo.latitude }} {{ photo.longtitude }}
-
+        <p>{{ photo.desc }} </p>
+        <p>Położenie: {{photo.latitude | latitude}}, {{photo.longtitude | longtitude}}</p>
         <img img-display photoblob="photo.content" alt="coś poszło nie tak" ng-transclude/>
 
         <button ng-click="delete(photo.id)">Usuń</button>

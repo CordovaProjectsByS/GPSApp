@@ -1,5 +1,9 @@
-﻿<label for="description">Opis</label>
-<input type="text" id="description" ng-model="desPic"/>
+﻿<h1>GPSApp</h1>
+<div id="description-section">
+    <label for="description">Opis</label>
+    <input type="text" id="description" ng-model="desPic" />
+</div>
 <input type="file" id="uploadedFile"/> 
 <button ng-click="addPicture()">Dodaj</button>
+<p class="picture-amount">Ilość zdjęć: {{ picturesAmount }}</p>
 <button ui-sref="photoList">Zobacz całą listę zdjęć</button>

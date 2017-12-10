@@ -16,24 +16,11 @@ app.config(function ($stateProvider, $urlServiceProvider) {
         controller: "PhotoListController"
     });
 
-    $stateProvider.state('photoList.detail', {
-        url: '/:photoId',
-        templateUrl: './scripts/partials/photoDetail.html',
-        controller: 'PhotoDetailController',
-        resolve: {
-            photo: function ($transition$, PhotoService) {
-                let id = parseInt($transition$.params().photoId);
-                
-                let photo = PhotoService.get(id);
-              
-                return photo;
-            }
-        }
-    });
-
 });
 
 app.controller('MainPageController', function ($scope, $rootScope, PhotoService) {
+
+    $scope.picturesAmount = $rootScope.pictures.length;
 
     $scope.addPicture = function () {
 
@@ -45,28 +32,21 @@ app.controller('MainPageController', function ($scope, $rootScope, PhotoService)
             'longtitude': ""
         };
 
-        
-
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
         function onSuccess(position) {
-            console.log("Pobieram dane z gps");
+
             picture.latitude = position.coords.latitude.toFixed(2);
             picture.longtitude = position.coords.longitude.toFixed(2);
-            console.log("wyświetlam:");
-
-            console.log(picture.id);
-            console.log(picture.desc);
-            console.log(picture.content);
-            console.log(picture.latitude);
-            console.log(picture.longtitude);
-
             $rootScope.pictures.unshift(picture);
+
         };
 
         function onError(error) {
             $rootScope.pictures.unshift(picture);
         };
+
+        $scope.picturesAmount++;
     }
 });
 
@@ -86,9 +66,6 @@ app.controller('PhotoDetailController', function ($scope, photo) {
 
 app.service('PhotoService', function ($http, $rootScope) {
     var service = {
-        list: function () {
-            return $http.get('./scripts/data/photos.json', { cache: true }).then(resp => resp.data);
-        },
         get: function (id) {
             return service.list().then(list => list.find(item => item.id === id));
         },
@@ -123,6 +100,36 @@ app.directive('imgDisplay', function () {
             };
             reader.readAsDataURL(scope.photoBlob);
         }
+    }
+});
+
+app.filter('latitude', function() {
+    return function (input) {
+        if (input == 0) return;
+        let output;
+        if (input > 0) {
+            output = input + " N";
+        }
+        else {
+            output = (-input) + " S"
+        }
+
+        return output;
+    }
+});
+
+app.filter('longtitude', function () {
+    return function (input) {
+        if (input == 0) return;
+        let output;
+        if (input > 0) {
+            output = input + " E";
+        }
+        else {
+            output = (-input) + " W"
+        }
+
+        return output;
     }
 });
 

@@ -1,1 +1,38 @@
-﻿
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    margin: 10px 10px;
+    padding: 5px 5px;
+}
+
+#description-section {
+    margin: 10px 0px;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+button {
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.picture-amount {
+    margin: 5px;
+}
+
+.image-section {
+    margin: 10px;
+}

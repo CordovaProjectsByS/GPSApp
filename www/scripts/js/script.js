@@ -111,15 +111,15 @@ app.service('PhotoService', function ($http, $rootScope) {
  
 app.directive('imgDisplay', function () {
     return {
+        transclude: true,
         scope: {
             photoBlob: '=photoblob'
         },
-        link: function (scope, elem) {
+        link: function (scope, elem, attrs) {
             var reader = new FileReader();
             reader.onload = function () {
-                elem.src = reader.result;
+                attrs.$set('src', reader.result);
                 console.log('zdjęcie się załadowało!!!!');
-                console.log('elem.src: ' + elem.src);
             };
             reader.readAsDataURL(scope.photoBlob);
         }

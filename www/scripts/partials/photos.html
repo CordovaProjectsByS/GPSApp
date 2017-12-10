@@ -7,7 +7,7 @@
 
         {{ photo.id }} {{ photo.desc }} {{ photo.content }} {{ photo.latitude }} {{ photo.longtitude }}
 
-        <img img-display photoblob="photo.content" alt="coś poszło nie tak"/>
+        <img img-display photoblob="photo.content" alt="coś poszło nie tak" ng-transclude/>
 
         <button ng-click="delete(photo.id)">Usuń</button>
     </li>

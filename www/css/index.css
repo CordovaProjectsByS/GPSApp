@@ -39,14 +39,13 @@ ul {
 
 div.close-photos-notification {
     width: 100%;
-    overflow: hidden;
 }
 
 div.close-photos-notification a {
     display: block;
     text-decoration: none;
     float: left;
-    width: 65%;
+    width: 60%;
 }
 
 div.close-photos-notification p {
@@ -55,7 +54,7 @@ div.close-photos-notification p {
     float: right;
     cursor: default;
     margin: 0;
-    width: 20%;
+    width: 30%;
 }
 
 div.close-photos-notification a, 
@@ -66,5 +65,9 @@ div.close-photos-notification p {
     color: white;
     font-size: 1.4em;
     text-transform: uppercase;
+}
+
+.clear-fix {
+    clear: both;
 }
 

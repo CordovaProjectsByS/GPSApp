@@ -15,6 +15,9 @@
     </head>
     <body ng-app="app">
         <div class="app">
+            <div ng-show="$root.isPhotoNearLocalization == true">
+                <a ui-sref="nearPhotoList">Przejdz do hello</a>
+            </div>
             <ui-view></ui-view>
         </div>
         <script type="text/javascript" src="cordova.js"></script>

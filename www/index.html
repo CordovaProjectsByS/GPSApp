@@ -15,10 +15,12 @@
     </head>
     <body ng-app="app">
         <div class="app">
-            <div ng-show="$root.isPhotoNearLocalization == true">
-                <a ui-sref="nearPhotoList">Przejdz do hello</a>
+            <div ng-show="$root.isPhotoNearLocalization == true" class="close-photos-notification">
+                <a ui-sref="nearPhotoList" ng-click="$root.isPhotoNearLocalization = false">Pokaż w pobliżu</a>
+                <p class="exit-notification" ng-click="$root.closeNotification()">Zamknij</p>
             </div>
-            <ui-view></ui-view>
+            <ui-view>
+            </ui-view>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="scripts/platformOverrides.js"></script>

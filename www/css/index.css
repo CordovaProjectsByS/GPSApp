@@ -36,3 +36,35 @@ ul {
 .image-section {
     margin: 10px;
 }
+
+div.close-photos-notification {
+    width: 100%;
+    overflow: hidden;
+}
+
+div.close-photos-notification a {
+    display: block;
+    text-decoration: none;
+    float: left;
+    width: 65%;
+}
+
+div.close-photos-notification p {
+    display: block;
+    text-decoration: none;
+    float: right;
+    cursor: default;
+    margin: 0;
+    width: 20%;
+}
+
+div.close-photos-notification a, 
+div.close-photos-notification p {
+    padding: 5px;
+    background: #4FC3F7;
+    text-align: center;
+    color: white;
+    font-size: 1.4em;
+    text-transform: uppercase;
+}
+

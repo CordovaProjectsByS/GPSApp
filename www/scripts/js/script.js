@@ -18,7 +18,7 @@ app.config(function ($stateProvider, $urlServiceProvider) {
 
     $stateProvider.state('nearPhotoList', {
         url: '/nearPhotos',
-        templateUrl: './scripts/partials/near-photos.html',
+        templateUrl: './scripts/partials/photos.html',
         controller: "NearPhotoListController"
     });
 
@@ -68,8 +68,14 @@ app.controller('PhotoListController', function ($scope, $rootScope, $timeout) {
 });
 
 
-app.controller('NearPhotoListController', function ($scope, $rootScope) {
-    
+app.controller('NearPhotoListController', function ($scope, $rootScope, DistanceService) {
+    $scope.photos = DistanceService.getClosePhotosSet($rootScope.localization);
+    $scope.pageTitle = "Close Photos";
+
+    $scope.delete = function (id) {
+        $scope.photos = $scope.photos.filter(picture => picture.id != id);
+        $rootScope.pictures = $scope.photos;
+    };
 });
 
 app.service('PhotoService', function ($http, $rootScope) {
@@ -102,19 +108,41 @@ app.service('DistanceService', function ($rootScope) {
             console.log("nowy obieg");
 
             let isNear = false;
+            let isOk = false;
             for (let photo of $rootScope.pictures) {
                 console.log(localization);
                 isNear = this.isPhotoNearYourLocalization(photo, localization);
                 if (isNear) {
-                    console.log("isPhotoNearLocalization na true");
-                    break;
+                    let timeNow = new Date().getTime();
+                    let timeBetween = timeNow - photo.showingTimeInNearLocation;
+                    if (timeBetween > 30 * 1000) {
+                        console.log("Mam takie zdjęcie która zgadza się z czasem.");
+                        isOk = true;
+                        break;
+                    }
                 }
             }
 
-            console.log("zapisuję ostatnią lokalizację.");
-
-            return isNear;
+            return isOk;
             
+        },
+
+        getClosePhotosSet: function (localization) {
+            let newPictures = [];
+            let isNear = false;
+            for (var photo of $rootScope.pictures) {
+                isNear = this.isPhotoNearYourLocalization(photo, localization);
+                if (isNear) {
+                    let timeNow = new Date().getTime();
+                    let timeBetween = timeNow - photo.showingTimeInNearLocation;
+                    if (timeBetween > 30 * 1000) {
+                        photo.showingTimeInNearLocation = timeNow;
+                        newPictures.push(photo);
+                    }
+                }
+            }
+
+            return newPictures;
         },
 
         isPhotoNearYourLocalization: function (photo, localization) {
@@ -143,6 +171,23 @@ app.service('DistanceService', function ($rootScope) {
             return isNear;
         }
     }
+
+    return service;
+});
+
+app.service('TimeService', function ($rootScope) {
+    var service = {
+        changeTimeForClosePhotos: function () {
+            let nowTime = new Date().getTime();
+            let timeBetween;
+            for (var photo of $rootScope.pictures) {
+                timeBeetween = nowTime - photo.showingTimeInNearLocation;
+                if (timeBeetween > 30 * 1000) {
+                    photo.showingTimeInNearLocation = nowTime;
+                }
+            }
+        }
+    };
 
     return service;
 });
@@ -193,11 +238,16 @@ app.filter('longtitude', function () {
     }
 });
 
-app.run(function($rootScope, DistanceService) {
+app.run(function($rootScope, DistanceService, TimeService) {
     $rootScope.pictures = [];
 
     console.log("isPhotoNearLocalization na false ");
     $rootScope.isPhotoNearLocalization = false;
+
+    $rootScope.closeNotification = function() {
+        TimeService.changeTimeForClosePhotos();
+        $rootScope.isPhotoNearLocalization = false;
+    };
 
     var watchId = navigator.geolocation.watchPosition(watchSuccess, null, {timeout: 5000});
 
@@ -213,6 +263,9 @@ app.run(function($rootScope, DistanceService) {
 
         $rootScope.$apply(function () {
             $rootScope.isPhotoNearLocalization = isNear;
+            if (isNear == true) {
+                $rootScope.localization = localization;
+            }
         });
     };
 
